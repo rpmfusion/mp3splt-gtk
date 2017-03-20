@@ -4,7 +4,7 @@
 Summary: Gtk frontend for mp3splt
 Name:    mp3splt-gtk
 Version: 0.9.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2
 Group:   Applications/Multimedia
 Source:  http://downloads.sourceforge.net/mp3splt/%{name}-%{version}.tar.gz
@@ -108,6 +108,9 @@ desktop-file-validate %{_builddir}/%{name}-%{version}/%{name}.desktop
 %{_mandir}/man1/mp3splt-gtk.*
 
 %changelog
+* Mon Mar 20 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 0.9.2-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Thu Jul 02 2015 Sérgio Basto <sergio@serjux.com> - 0.9.2-1
 - Update to 0.9.2 .
 - Disable libaudacious, use gstreamer is recommend by upstream.
