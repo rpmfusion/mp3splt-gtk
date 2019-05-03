@@ -4,12 +4,12 @@
 Summary: Gtk frontend for mp3splt
 Name:    mp3splt-gtk
 Version: 0.9.2
-Release: 6%{?dist}
+Release: 7%{?dist}
 License: GPLv2
-Group:   Applications/Multimedia
 Source:  http://downloads.sourceforge.net/mp3splt/%{name}-%{version}.tar.gz
 Patch1:  mp3splt-gtk-format-security.patch
 URL:     http://mp3splt.sourceforge.net/
+
 BuildRequires: dbus-glib-devel
 BuildRequires: cutter-devel
 BuildRequires: libmp3splt-devel >= %{version}
@@ -78,7 +78,7 @@ libtoolize
 automake --add-missing
 %configure %{!?with_audacious:--disable-audacious}
 
-make %{?_smp_mflags}
+%make_build
 
 %install
 %make_install
@@ -89,12 +89,6 @@ make %{?_smp_mflags}
 desktop-file-validate %{_builddir}/%{name}-%{version}/%{name}.desktop
 
 
-%post
-/usr/bin/update-desktop-database &> /dev/null || :
-
-%postun
-/usr/bin/update-desktop-database &> /dev/null || :
-
 %files -f %{name}.lang
 %doc ABOUT-NLS AUTHORS ChangeLog README
 %license COPYING
@@ -102,12 +96,17 @@ desktop-file-validate %{_builddir}/%{name}-%{version}/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
 %{_datadir}/pixmaps/%{name}_ico.svg
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/gnome/help/%{name}
-%{_datadir}/omf/%{name}
-%{_datadir}/%{name}
+%{_datadir}/gnome/help/%{name}/
+%{_datadir}/omf/%{name}/
+%{_datadir}/%{name}/
 %{_mandir}/man1/mp3splt-gtk.*
 
 %changelog
+* Fri May 03 2019 Leigh Scott <leigh123linux@gmail.com> - 0.9.2-7
+- Rebuild for new gstreamer1 version
+- Remove Group tag
+- Remove scriptlets
+
 * Mon Mar 04 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 0.9.2-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
