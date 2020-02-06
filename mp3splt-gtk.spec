@@ -1,3 +1,4 @@
+%define _legacy_common_support 1
 %bcond_with audacious
 %bcond_without gtk3
 
