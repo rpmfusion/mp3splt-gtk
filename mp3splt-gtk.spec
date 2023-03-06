@@ -5,10 +5,10 @@
 Summary: Gtk frontend for mp3splt
 Name:    mp3splt-gtk
 Version: 0.9.2
-Release: 14%{?dist}
+Release: 15%{?dist}
 License: GPLv2
 Source:  http://downloads.sourceforge.net/mp3splt/%{name}-%{version}.tar.gz
-Patch1:  mp3splt-gtk-format-security.patch
+Patch0:  v0.9.2..385d2001_2020-11-10.patch
 URL:     http://mp3splt.sourceforge.net/
 
 BuildRequires: dbus-glib-devel
@@ -51,7 +51,7 @@ mp3splt-gtk.
 
 %prep
 %setup -q
-%patch1 -p1 -b .format-security
+%patch0 -p2
 %{_bindir}/iconv -f iso8859-1 -t utf8 AUTHORS -o AUTHORS.txt
 touch -r AUTHORS AUTHORS.txt
 mv AUTHORS.txt AUTHORS
@@ -103,6 +103,9 @@ desktop-file-validate %{_builddir}/%{name}-%{version}/%{name}.desktop
 %{_mandir}/man1/mp3splt-gtk.*
 
 %changelog
+* Mon Mar 06 2023 Sérgio Basto <sergio@serjux.com> - 0.9.2-15
+- Update to last git snapshot from https://github.com/mp3splt/mp3splt
+
 * Sun Aug 07 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.9.2-14
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild and ffmpeg
   5.1
