@@ -12,7 +12,9 @@ Patch0:  v0.9.2..385d2001_2020-11-10.patch
 URL:     http://mp3splt.sourceforge.net/
 
 BuildRequires: dbus-glib-devel
+%if 0%{?fedora} && 0%{?fedora} < 40
 BuildRequires: cutter-devel
+%endif
 BuildRequires: libmp3splt-devel >= %{version}
 BuildRequires: gstreamer1-devel
 BuildRequires: gstreamer1-plugins-base-devel
@@ -50,34 +52,18 @@ mp3splt-gtk.
 
 
 %prep
-%setup -q
-%patch0 -p2
+%autosetup -p2
 %{_bindir}/iconv -f iso8859-1 -t utf8 AUTHORS -o AUTHORS.txt
 touch -r AUTHORS AUTHORS.txt
 mv AUTHORS.txt AUTHORS
-#sed -i -e's,PREFIX/mp3splt-gtk_ico.svg,mp3splt-gtk_ico,g' mp3splt-gtk.desktop.in
-# gtk3 is broken on F14
-# sed -i -e's/gtk+-3.0 >= 3.0/gtk+-3.0 >= 2.90/g' configure.ac
-# sed -i -e's/gtk+-2.0 >= 2.20/gtk+-2.0 >= 2.18/g' configure.ac
-# sed -i -e's/audclient/audacious/g' configure.ac
+./autogen.sh
 
 %build
-#remove old generated files
-rm -f po/Makefile.in.in
-rm -f build-aux/*
-rm -f m4/*m4
-rm -f m4/Makefile.in
-rm -f libtool aclocal.m4 config.status configure autom4te.cache/* ltmain.sh
-rm -f ABOUT-NLS config.h.in~ Makefile.in
-
-autopoint
-aclocal
-autoheader
-gnome-doc-prepare
-autoconf 
-libtoolize
-automake --add-missing
-%configure %{!?with_audacious:--disable-audacious}
+%configure \
+%if 0%{?fedora} && 0%{?fedora} >= 40
+ --disable-cutter \
+%endif
+ %{!?with_audacious:--disable-audacious}
 
 %make_build
 
